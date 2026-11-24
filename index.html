@@ -4,6 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nneoma & Chinomso | Traditional Wedding</title>
+<link rel="icon" href="img/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="img/icon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -159,8 +164,22 @@ section{padding:110px 8%}
 .color-chip{display:inline-flex;align-items:center;gap:12px;border:1px solid var(--gold);padding:12px 22px;margin-top:10px;letter-spacing:2px;font-size:.8rem}
 .color-chip span{width:24px;height:24px;border-radius:50%;background:#7c1f2d;border:2px solid #fff;animation:pulse 2s infinite}
 
-.rsvp-section{background:#f8f1e8}
-.rsvp-card{max-width:650px;margin:auto;padding:50px;background:#fff;box-shadow:0 20px 70px #4b101d12;border-top:3px solid var(--gold)}
+.gift-section{background:var(--ivory)}
+.gift-card{position:relative;max-width:440px;margin:auto;background:#fff;border:1px solid var(--gold);box-shadow:0 20px 70px #4b101d12;padding:48px 42px}
+.gift-card::before{content:"";position:absolute;inset:9px;border:1px solid #e7d6b9;pointer-events:none}
+.gift-row{text-align:center;padding:20px 0;border-bottom:1px dashed #e7d6b9}
+.gift-row:first-child{padding-top:0}
+.gift-row:last-child{border-bottom:0;padding-bottom:0}
+.gift-row span{display:block;color:var(--wine-light);font-size:.68rem;text-transform:uppercase;letter-spacing:3px;margin-bottom:10px}
+.gift-row strong{display:inline-flex;align-items:center;gap:12px;color:var(--wine);font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:500}
+.copy-btn{width:34px;height:34px;flex:0 0 auto;border:1px solid var(--gold);background:transparent;color:var(--wine-light);font-size:.95rem;transition:.3s}
+.copy-btn:hover{background:var(--gold);color:var(--wine)}
+.copy-btn.copied{background:var(--wine);color:var(--gold-light);border-color:var(--wine)}
+
+.rsvp-section{position:relative;overflow:hidden;background:var(--wine)}
+.rsvp-video{position:absolute;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;object-position:center 30%}
+.rsvp-section::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(rgba(58,12,23,.68),rgba(58,12,23,.8));pointer-events:none}
+.rsvp-card{position:relative;z-index:2;max-width:650px;margin:auto;padding:50px;background:#fff;box-shadow:0 30px 80px #0007;border-top:3px solid var(--gold)}
 .rsvp-card h2{color:var(--wine);text-align:center;font-size:3rem;font-weight:500}
 .rsvp-card>p{text-align:center;color:#766b68;font-size:.85rem;margin:12px 0 30px}
 .rsvp-card label{display:block;margin:18px 0 8px;color:var(--wine);font-size:.8rem}
@@ -174,6 +193,9 @@ footer h2{font-size:3.5rem;color:var(--gold-light);font-weight:500}
 footer p{margin-top:15px;font-size:.75rem;letter-spacing:2px;color:#cbb9b2}
 .back-top{position:fixed;right:25px;bottom:25px;z-index:900;width:45px;height:45px;border:1px solid var(--gold);background:var(--wine);color:#fff;display:grid;place-items:center;opacity:0;visibility:hidden;transition:.3s}
 .back-top.show{opacity:1;visibility:visible}
+.music-toggle{position:fixed;left:25px;bottom:25px;z-index:900;width:45px;height:45px;border:1px solid var(--gold);background:var(--wine);color:var(--gold-light);display:grid;place-items:center;font-size:1.1rem;transition:.3s}
+.music-toggle:hover{background:var(--gold);color:var(--wine)}
+.music-toggle.paused{color:#cbb9b2}
 
 .reveal{opacity:0;transform:translateY(45px);transition:opacity .9s ease,transform .9s ease}
 .reveal.visible{opacity:1;transform:translateY(0)}
@@ -208,6 +230,11 @@ footer p{margin-top:15px;font-size:.75rem;letter-spacing:2px;color:#cbb9b2}
 
 <body>
 
+<audio id="bgMusic" loop preload="auto">
+  <source src="audio/theme-song.mp3" type="audio/mpeg">
+</audio>
+<button class="music-toggle" id="musicToggle" aria-label="Pause music" aria-pressed="true">♪</button>
+
 <div class="preloader" id="preloader">
   <div class="loader-content"><h1>N & C</h1><p>A CELEBRATION OF LOVE</p></div>
 </div>
@@ -217,7 +244,7 @@ footer p{margin-top:15px;font-size:.75rem;letter-spacing:2px;color:#cbb9b2}
   <button class="menu-toggle" id="menuToggle" aria-label="Open navigation">☰</button>
   <nav id="navigation">
     <a href="#home">Home</a><a href="#story">Our Story</a><a href="#details">Details</a>
-    <a href="#gallery">Gallery</a><a href="#traditions">Traditions</a><a href="#rsvp">RSVP</a>
+    <a href="#gallery">Gallery</a><a href="#traditions">Traditions</a><a href="#gift">Gift</a><a href="#rsvp">RSVP</a>
   </nav>
 </header>
 
@@ -233,6 +260,12 @@ footer p{margin-top:15px;font-size:.75rem;letter-spacing:2px;color:#cbb9b2}
     <div class="hero-slide" data-duration="4500"><img src="img/gallery-07.jpg" alt="Chinomso holding a traditional fan"></div>
     <div class="hero-slide" data-duration="4500"><img src="img/story-couple.jpg" alt="Nneoma and Chinomso embracing"></div>
     <div class="hero-slide" data-duration="4500"><img src="img/attire-bride.jpg" alt="Nneoma in burnt red traditional attire" class="shift-down"></div>
+    <div class="hero-slide" data-duration="4500"><img src="img/gallery-08.jpg" alt="Nneoma resting in Chinomso's embrace"></div>
+    <div class="hero-slide" data-duration="4500"><img src="img/gallery-09.jpg" alt="Nneoma and Chinomso walking together hand in hand"></div>
+    <div class="hero-slide" data-duration="4500"><img src="img/gallery-10.jpg" alt="Nneoma walking as Chinomso follows behind"></div>
+    <div class="hero-slide" data-duration="4500"><img src="img/gallery-11.jpg" alt="Nneoma and Chinomso standing together in traditional attire"></div>
+    <div class="hero-slide" data-duration="4500"><img src="img/gallery-12.jpg" alt="Nneoma in burnt red traditional attire, holding a fan"></div>
+    <div class="hero-slide" data-duration="4500"><img src="img/gallery-13.jpg" alt="Nneoma and Chinomso matching in burnt red traditional attire"></div>
     <div class="hero-slide" data-duration="9000">
       <video id="heroVideo" muted playsinline>
         <source src="img/our-video.mp4" type="video/mp4">
@@ -333,6 +366,12 @@ footer p{margin-top:15px;font-size:.75rem;letter-spacing:2px;color:#cbb9b2}
     <button class="g-item g-tall" data-caption="Nneoma" aria-label="Open photo: Nneoma"><img data-fade src="img/gallery-06.jpg" alt="Nneoma in burnt red traditional attire" loading="lazy" decoding="async"><span>Nneoma</span></button>
     <button class="g-item g-big" data-caption="Heritage and pride" aria-label="Open photo: Heritage and pride"><img data-fade src="img/gallery-04.jpg" alt="Chinomso in red traditional attire" loading="lazy" decoding="async"><span>Heritage and pride</span></button>
     <button class="g-item g-tall" data-caption="Rooted in culture" aria-label="Open photo: Rooted in culture"><img data-fade src="img/gallery-07.jpg" alt="Chinomso holding a traditional fan" loading="lazy" decoding="async"><span>Rooted in culture</span></button>
+    <button class="g-item g-sm" data-caption="A tender moment" aria-label="Open photo: A tender moment"><img data-fade src="img/gallery-08.jpg" alt="Nneoma resting in Chinomso's embrace" loading="lazy" decoding="async"><span>A tender moment</span></button>
+    <button class="g-item g-tall" data-caption="Side by side" aria-label="Open photo: Side by side"><img data-fade src="img/gallery-09.jpg" alt="Nneoma and Chinomso walking together hand in hand" loading="lazy" decoding="async"><span>Side by side</span></button>
+    <button class="g-item g-sm" data-caption="Every step together" aria-label="Open photo: Every step together"><img data-fade src="img/gallery-10.jpg" alt="Nneoma walking as Chinomso follows behind" loading="lazy" decoding="async"><span>Every step together</span></button>
+    <button class="g-item g-tall" data-caption="Together in tradition" aria-label="Open photo: Together in tradition"><img data-fade src="img/gallery-11.jpg" alt="Nneoma and Chinomso standing together in traditional attire" loading="lazy" decoding="async"><span>Together in tradition</span></button>
+    <button class="g-item g-tall" data-caption="Nneoma" aria-label="Open photo: Nneoma"><img data-fade src="img/gallery-12.jpg" alt="Nneoma in burnt red traditional attire, holding a fan" loading="lazy" decoding="async"><span>Nneoma</span></button>
+    <button class="g-item g-big" data-caption="Matched in red" aria-label="Open photo: Matched in red"><img data-fade src="img/gallery-13.jpg" alt="Nneoma and Chinomso matching in burnt red traditional attire" loading="lazy" decoding="async"><span>Matched in red</span></button>
   </div>
 </section>
 
@@ -354,7 +393,7 @@ footer p{margin-top:15px;font-size:.75rem;letter-spacing:2px;color:#cbb9b2}
 <section class="attire">
   <div class="attire-wrap">
     <div class="attire-photo reveal">
-      <div class="arch"><img data-fade src="img/attire-bride.jpg" width="800" height="1000" alt="Nneoma in burnt red traditional attire" loading="lazy" decoding="async"></div>
+      <div class="arch"><img data-fade src="img/gallery-13.jpg" width="800" height="1000" alt="Nneoma and Chinomso matching in burnt red traditional attire" loading="lazy" decoding="async"></div>
     </div>
     <div class="attire-copy reveal">
       <small>COME IN YOUR BEST</small>
@@ -365,7 +404,34 @@ footer p{margin-top:15px;font-size:.75rem;letter-spacing:2px;color:#cbb9b2}
   </div>
 </section>
 
+<section class="gift-section" id="gift">
+  <div class="section-heading reveal">
+    <small>With gratitude</small>
+    <h2>Send In Your Gift</h2>
+    <div class="gold-line"></div>
+    <p>Your presence is the greatest gift of all. But should you wish to celebrate with us further, you may do so below.</p>
+  </div>
+  <div class="gift-card reveal">
+    <div class="gift-row">
+      <span>Account Name</span>
+      <strong>Joshua Nzeama</strong>
+    </div>
+    <div class="gift-row">
+      <span>Account Number</span>
+      <strong id="giftAccountNumber">2129367152</strong>
+      <button class="copy-btn" id="copyAccount" type="button" aria-label="Copy account number">⧉</button>
+    </div>
+    <div class="gift-row">
+      <span>Bank</span>
+      <strong>UBA</strong>
+    </div>
+  </div>
+</section>
+
 <section class="rsvp-section" id="rsvp">
+  <video class="rsvp-video" autoplay muted loop playsinline poster="img/gallery-13.jpg">
+    <source src="img/hervideo.mp4" type="video/mp4">
+  </video>
   <div class="rsvp-card reveal">
     <h2>Will You Join Us?</h2>
     <p>Your presence will make our special day even more memorable. Kindly let us know if you will be attending.</p>
@@ -413,6 +479,31 @@ document.querySelectorAll("img[data-fade]").forEach(img => {
   img.complete ? done() : (img.addEventListener("load", done), img.addEventListener("error", done));
 });
 
+/* BACKGROUND MUSIC (plays nonstop; starts on first interaction if autoplay is blocked) */
+const bgMusic = document.getElementById("bgMusic");
+const musicToggle = document.getElementById("musicToggle");
+
+function setMusicIcon() {
+  const playing = !bgMusic.paused;
+  musicToggle.textContent = playing ? "♪" : "✕";
+  musicToggle.classList.toggle("paused", !playing);
+  musicToggle.setAttribute("aria-pressed", String(playing));
+  musicToggle.setAttribute("aria-label", playing ? "Pause music" : "Play music");
+}
+
+function unlockMusic() {
+  bgMusic.play().then(setMusicIcon).catch(() => {});
+}
+unlockMusic();
+["click", "touchstart", "keydown"].forEach(evt =>
+  document.addEventListener(evt, unlockMusic, { once: true })
+);
+
+musicToggle.addEventListener("click", () => {
+  if (bgMusic.paused) bgMusic.play().then(setMusicIcon);
+  else { bgMusic.pause(); setMusicIcon(); }
+});
+
 /* HERO SLIDESHOW (photos + video, auto-advancing) */
 const heroVideo = document.getElementById("heroVideo");
 const heroSlides = Array.from(document.querySelectorAll(".hero-slide"));
@@ -450,6 +541,30 @@ soundToggle.addEventListener("click", () => {
   soundToggle.textContent = heroVideo.muted ? "🔇" : "🔊";
   soundToggle.setAttribute("aria-pressed", String(!heroVideo.muted));
   soundToggle.setAttribute("aria-label", heroVideo.muted ? "Turn sound on" : "Turn sound off");
+});
+
+/* GIFT ACCOUNT COPY */
+const copyAccount = document.getElementById("copyAccount");
+copyAccount.addEventListener("click", async () => {
+  const number = document.getElementById("giftAccountNumber").textContent.trim();
+  try {
+    await navigator.clipboard.writeText(number);
+  } catch {
+    const temp = document.createElement("textarea");
+    temp.value = number;
+    document.body.appendChild(temp);
+    temp.select();
+    document.execCommand("copy");
+    document.body.removeChild(temp);
+  }
+  copyAccount.textContent = "✓";
+  copyAccount.classList.add("copied");
+  copyAccount.setAttribute("aria-label", "Copied!");
+  setTimeout(() => {
+    copyAccount.textContent = "⧉";
+    copyAccount.classList.remove("copied");
+    copyAccount.setAttribute("aria-label", "Copy account number");
+  }, 1800);
 });
 
 /* NAVIGATION */
